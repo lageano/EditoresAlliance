@@ -1,0 +1,1229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canary NPC Maker</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cookie&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="looktype.css">
+
+    <style>
+        *{margin: 0; padding: 0;}
+
+        /* Chrome, Edge and Safari */
+        *::-webkit-scrollbar {
+        height: 7px;
+        width: 7px;
+        }
+        *::-webkit-scrollbar-track {
+        border-radius: 0px;
+        background-color: #656565;
+        }
+
+        *::-webkit-scrollbar-track:hover {
+        background-color: #656565;
+        }
+
+        *::-webkit-scrollbar-track:active {
+        background-color: #656565;
+        }
+
+        *::-webkit-scrollbar-thumb {
+        border-radius: 0px;
+        background-color: #929292;
+        }
+
+        *::-webkit-scrollbar-thumb:hover {
+        background-color: #929292;
+        }
+
+        *::-webkit-scrollbar-thumb:active {
+        background-color: #929292;
+        }
+
+        body{
+            background: url(assets/imgs/bg.png) repeat;
+            font-family: "Roboto", sans-serif;
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        button{
+            border-top: 1px solid #636363;
+            border-left: 1px solid #636363;
+            border-right: 1px solid hsl(0deg 0% 0% / 25%);
+            border-bottom: 1px solid hsl(0deg 0% 0% / 25%);
+            padding: 10px 20px;
+            background: hsl(0deg 0% 100% / 2%);
+            color: #cecece;
+        }
+
+        button:active{
+            border-top: 1px solid hsl(0deg 0% 0% / 25%);
+            border-left: 1px solid hsl(0deg 0% 0% / 25%);
+            border-right: 1px solid #636363;
+            border-bottom: 1px solid #636363;
+            padding: 10px 20px;
+            background: hsla(0, 0%, 0%, 0.349);
+            color: #cecece;
+        }
+
+        button[class="active"]{
+            border-top: 1px solid hsl(0deg 0% 0% / 25%);
+            border-left: 1px solid hsl(0deg 0% 0% / 25%);
+            border-right: 1px solid #636363;
+            border-bottom: 1px solid #636363;
+            padding: 10px 20px;
+            background: hsl(0deg 0% 100% / 2%);
+            color: #cecece;
+        }
+
+        /* Estilos para abas principais ativas */
+        .tab-btn {
+            border-top: 1px solid #636363;
+            border-left: 1px solid #636363;
+            border-right: 1px solid hsl(0deg 0% 0% / 25%);
+            border-bottom: 1px solid hsl(0deg 0% 0% / 25%);
+            padding: 10px 20px;
+            background: hsl(0deg 0% 100% / 2%);
+            color: #cecece;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .tab-btn:hover {
+            background: hsla(0, 0%, 0%, 0.2);
+        }
+
+        .tab-btn.active {
+            border-top: 1px solid hsl(0deg 0% 0% / 25%);
+            border-left: 1px solid hsl(0deg 0% 0% / 25%);
+            border-right: 1px solid #636363;
+            border-bottom: 1px solid #636363;
+            background: hsla(0, 0%, 0%, 0.349);
+            color: #fff;
+            font-weight: 500;
+        }
+
+        label{
+            color: #cecece;
+        }
+
+        input, select{
+            border-top: 1px solid hsl(0deg 0% 0% / 25%);
+            border-left: 1px solid hsl(0deg 0% 0% / 25%);
+            border-right: 1px solid #636363;
+            border-bottom: 1px solid #636363;
+            padding: 10px 20px;
+            background: #353535;
+            color: #cecece;
+        }
+
+        .input-group{
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 20px;
+            grid-gap: 6px;
+        }
+
+        .checkGroup{
+            border-top: 1px solid hsl(0deg 0% 0% / 25%);
+            border-left: 1px solid hsl(0deg 0% 0% / 25%);
+            border-right: 1px solid #636363;
+            border-bottom: 1px solid #636363;
+            padding: 10px 10px;
+            background: hsl(0deg 0% 0% / 8%);
+            color: #cecece;
+            display: flex;
+            align-items: center;
+            grid-gap: 10px
+        }
+
+        input[type="checkbox"] {
+            all: unset;
+            border-top: 1px solid hsl(0deg 0% 0% / 25%);
+            border-left: 1px solid hsl(0deg 0% 0% / 25%);
+            border-right: 1px solid #636363;
+            border-bottom: 1px solid #636363;
+            background: hsl(0deg 0% 0% / 25%);
+            width: 15px;
+            height: 15px;
+            display: inline-block;
+        }
+        input[type="checkbox"]:checked{
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M6 10l3 3l6-6'/%3e%3c/svg%3e");
+        }
+
+        #topbar{
+            display: flex;
+            color: #cecece; 
+            background: hsla(0, 0%, 0%, 0.349);
+            padding: 15px;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+        }
+
+        #topbar > #options{display:flex; grid-gap: 20px;}
+        #topbar > #title{ display: flex; justify-content: center;}
+        #topbar > #link{ display: flex; justify-content: flex-end; grid-gap: 20px; color: #cecece;}
+        #topbar > #link > span >a{ color: #cecece; text-decoration: none;}
+
+        .basic-data{
+            width: 900px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto;
+            grid-gap: 60px;
+        }
+
+        .basic-data-inputs{
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-gap: 10px;
+            margin-top: 60px;
+        }
+
+        nav{
+            margin-top: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            grid-gap: 20px
+        }
+
+        #npc-image{
+            margin-top: 29px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        img[class="character"]{
+            scale: 1.5;
+            background: hsla(0, 0%, 0%, 0.349);
+            border-top: 1px solid hsl(0deg 0% 0% / 25%);
+            border-left: 1px solid hsl(0deg 0% 0% / 25%);
+            border-right: 1px solid #636363;
+            border-bottom: 1px solid #636363;
+            padding: 0 10px 10px 0;
+        }
+
+        #outfitter{
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            margin-top: 40px;
+            grid-gap: 20px;
+        }
+
+        #outfitList, #mountList {
+            list-style: none;
+            max-height: 223px;
+            overflow-y: auto;
+            background: #353535;
+            padding: 10px;
+            margin-top: 10px;
+            color: #cecece;
+            width: 160px;
+            font-size: 14px;
+            border-top: 1px solid hsl(0deg 0% 0% / 25%);
+            border-left: 1px solid hsl(0deg 0% 0% / 25%);
+            border-right: 1px solid #636363;
+            border-bottom: 1px solid #636363;
+        }
+
+        #outfitList li, #mountList li {
+            padding: 5px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        #outfitList li:hover, #mountList li:hover {
+            background: hsla(0, 0%, 0%, 0.349);
+        }
+
+        #outfit-selector {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .oufitsMounts{
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-gap: 10px;
+        }
+
+        /* Estilos para a aba Buy/Sell */
+        #buy-sell-section {
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+
+        /* Sub-navegação */
+        .sub-nav {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .sub-tab-btn {
+            border-top: 1px solid #636363;
+            border-left: 1px solid #636363;
+            border-right: 1px solid hsl(0deg 0% 0% / 25%);
+            border-bottom: 1px solid hsl(0deg 0% 0% / 25%);
+            padding: 12px 25px;
+            background: hsl(0deg 0% 100% / 2%);
+            color: #cecece;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .sub-tab-btn:hover {
+            background: hsla(0, 0%, 0%, 0.2);
+        }
+
+        .sub-tab-btn.active {
+            border-top: 1px solid hsl(0deg 0% 0% / 25%);
+            border-left: 1px solid hsl(0deg 0% 0% / 25%);
+            border-right: 1px solid #636363;
+            border-bottom: 1px solid #636363;
+            background: hsla(0, 0%, 0%, 0.349);
+            color: #fff;
+        }
+
+        /* Sub-conteúdo */
+        .sub-content {
+            display: none;
+        }
+
+        .sub-content.active {
+            display: block;
+        }
+
+        #sell-section, #buy-section {
+            padding: 20px;
+        }
+
+        .suggestions-dropdown,
+        #sell-item-suggestions,
+        #buy-item-suggestions {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: #353535;
+            border: 1px solid #636363;
+            border-top: none;
+            max-height: 200px;
+            overflow-y: auto;
+            z-index: 1000;
+            display: none;
+        }
+
+        .suggestion-item {
+            padding: 10px;
+            cursor: pointer;
+            color: #cecece;
+            border-bottom: 1px solid #555;
+        }
+
+        .suggestion-item:hover {
+            background: hsla(0, 0%, 0%, 0.349);
+        }
+
+        .suggestion-item:last-child {
+            border-bottom: none;
+        }
+
+        #sell-items-table,
+        #buy-items-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: #353535;
+            color: #cecece;
+        }
+
+        #sell-items-table th,
+        #sell-items-table td,
+        #buy-items-table th,
+        #buy-items-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #555;
+        }
+
+        #sell-items-table th,
+        #buy-items-table th {
+            background: hsla(0, 0%, 0%, 0.349);
+            font-weight: 500;
+        }
+
+        #sell-items-table tr:hover,
+        #buy-items-table tr:hover {
+            background: hsla(0, 0%, 0%, 0.2);
+        }
+
+        .action-btn {
+            background: none;
+            border: 1px solid #636363;
+            color: #cecece;
+            padding: 5px 8px;
+            margin: 0 2px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .action-btn:hover {
+            background: hsla(0, 0%, 0%, 0.349);
+        }
+
+        .action-btn.delete {
+            color: #ff6b6b;
+        }
+
+        .action-btn.edit {
+            color: #4ecdc4;
+        }
+
+        .content {
+            display: none;
+        }
+
+        .content.show {
+            display: block;
+        }
+
+        /* Estilos para a aba Keywords */
+        #keywords-section {
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+
+        #keywords-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: #353535;
+            color: #cecece;
+        }
+
+        #keywords-table th,
+        #keywords-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #555;
+        }
+
+        #keywords-table th {
+            background: hsla(0, 0%, 0%, 0.349);
+            font-weight: 500;
+        }
+
+        #keywords-table tr:hover {
+            background: hsla(0, 0%, 0%, 0.2);
+        }
+
+        #keywords-table td:nth-child(2) {
+            max-width: 300px;
+            word-wrap: break-word;
+        }
+
+        /* Estilos para a aba Talking */
+        #talking-section {
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+
+        /* Estilos para o modal de geração */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        .modal-content {
+            background-color: #353535;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #636363;
+            width: 90%;
+            max-width: 1000px;
+            max-height: 85vh;
+            border-radius: 5px;
+            color: #cecece;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #636363;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+            color: #fff;
+        }
+
+        .close {
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .modal-body {
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+
+        #generated-code {
+            width: 100%;
+            height: 400px;
+            background: #2c2c2c;
+            color: #cecece;
+            border: 1px solid #636363;
+            padding: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.4;
+            resize: vertical;
+            border-radius: 3px;
+        }
+
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid #636363;
+        }
+
+        .download-btn {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            cursor: pointer;
+            border-radius: 3px;
+            font-size: 14px;
+            transition: background 0.2s;
+        }
+
+        .download-btn:hover {
+            background: #45a049;
+        }
+
+        /* Estilos para o modal de confirmação */
+        .confirm-modal {
+            display: none;
+            position: fixed;
+            z-index: 1001;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        .confirm-modal-content {
+            background: url(assets/imgs/bg.png) repeat;
+            margin: 15% auto;
+            padding: 30px;
+            border: 1px solid #636363;
+            width: 400px;
+            color: #cecece;
+            text-align: center;
+        }
+
+        .confirm-modal h3 {
+            margin: 0 0 20px 0;
+            color: #fff;
+            font-size: 18px;
+        }
+
+        .confirm-modal-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .confirm-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.2s;
+        }
+
+        .confirm-btn.yes {
+            background: #f44336;
+            color: white;
+        }
+
+        .confirm-btn.yes:hover {
+            background: #da190b;
+        }
+
+        .confirm-btn.no {
+            background: #666;
+            color: white;
+        }
+
+        .confirm-btn.no:hover {
+            background: #555;
+        }
+
+        /* Estilos para o modal de erro */
+        .error-modal {
+            display: none;
+            position: fixed;
+            z-index: 1001;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        .error-modal-content {
+            background-color: #353535;
+            margin: 15% auto;
+            padding: 30px;
+            border: 1px solid #636363;
+            width: 350px;
+            border-radius: 5px;
+            color: #cecece;
+            text-align: center;
+        }
+
+        .error-modal h3 {
+            margin: 0 0 20px 0;
+            color: #f44336;
+            font-size: 18px;
+        }
+
+        .error-btn {
+            background: #f44336;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.2s;
+            margin-top: 15px;
+        }
+
+        .error-btn:hover {
+            background: #da190b;
+        }
+
+        /* Input de arquivo oculto */
+        #file-input {
+            display: none;
+        }
+
+        /* Estilos para o modal de help */
+        .help-modal {
+            display: none;
+            position: fixed;
+            z-index: 1001;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        .help-modal-content {
+            background: url(assets/imgs/bg.png) repeat;
+            margin: 5% auto;
+            padding: 30px;
+            border: 1px solid #636363;
+            width: 500px;
+            max-width: 90%;
+            color: #cecece;
+        }
+
+        .help-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #636363;
+        }
+
+        .help-modal-header h2 {
+            margin: 0;
+            color: #fff;
+            font-size: 24px;
+        }
+
+        .help-modal-body {
+            line-height: 1.6;
+        }
+
+        .help-modal-body h3 {
+            color: #4ecdc4;
+            margin: 20px 0 10px 0;
+            font-size: 16px;
+        }
+
+        .help-modal-body p {
+            margin: 10px 0;
+            font-size: 14px;
+        }
+
+        .help-modal-body .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 15px 0;
+        }
+
+        .help-modal-body .info-item {
+            background: hsla(0, 0%, 0%, 0.2);
+            padding: 12px;
+            border-radius: 3px;
+            border: 1px solid #555;
+        }
+
+        .help-modal-body .info-item strong {
+            color: #4ecdc4;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .help-modal-body a {
+            color: #4ecdc4;
+            text-decoration: none;
+        }
+
+        .help-modal-body a:hover {
+            color: #fff;
+            text-decoration: underline;
+        }
+
+        .talking-inputs {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .talking-inputs .input-group {
+            margin-bottom: 0;
+        }
+
+        .talking-inputs input[type="text"] {
+            width: 100%;
+            font-size: 14px;
+            padding: 12px 15px;
+        }
+
+        .message-info {
+            background: hsla(0, 0%, 0%, 0.2);
+            border: 1px solid #636363;
+            border-radius: 5px;
+            padding: 20px;
+            color: #cecece;
+        }
+
+        .message-info h3 {
+            margin-bottom: 15px;
+            color: #fff;
+            font-size: 16px;
+        }
+
+        .message-info ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .message-info li {
+            padding: 5px 0;
+            border-bottom: 1px solid #555;
+            font-size: 14px;
+        }
+
+        .message-info li:last-child {
+            border-bottom: none;
+        }
+
+        .message-info strong {
+            color: #4ecdc4;
+            font-family: monospace;
+        }
+
+        #genderSelector, .addons{
+            width: 114px;
+        }
+
+        #genderSelector{
+            height: 28px;
+            padding:0px 0px 0px 6px;
+        }
+
+        .addons{
+            font-size: 13px;
+        }
+
+        .addons .checkGroup{
+            height: 12px;
+        }
+
+        .characterContainer{
+            width: 114px;
+            max-width: 114px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div id="topbar">
+            <div id="options">
+                <span onclick="showNewConfirmModal()" style="cursor: pointer;">New</span>
+                <span onclick="openNPCFile()" style="cursor: pointer;">Open</span>
+                <span onclick="generateNPC()" style="cursor: pointer;">Generate</span>
+                <span onclick="showHelpModal()" style="cursor: pointer;">Help</span>
+            </div>
+            <div id="title">Canary NPC Maker</div>
+            <div id="link">
+                <span><a href="https://discord.gg/opentibiabr" target="_blank">discord.gg/opentibiabr</a></span>
+            </div>    
+        </div>
+
+        <nav>
+            <button class="tab-btn active" content-id="basic">Basic</button>
+            <button class="tab-btn" content-id="buy-sell">Buy/Sell</button>
+            <button class="tab-btn" content-id="talking">Talking</button>
+            <button class="tab-btn" content-id="keywords">Keywords</button>
+        </nav>
+        
+    </header>
+
+    <div class="tab-contents">
+        <div id="basic" class="content basic-data">
+            <div id="outfitter">
+                <div class="oufitsMounts">
+                    <div class="outfits">
+                        <label for="">Outfits</label>
+                        <ul id="outfitList"></ul>
+                    </div>
+                    <div class="mounts">
+                        <label for="">Mounts</label>
+                        <ul id="mountList"></ul>
+                    </div>
+                </div>
+    
+                <div class="characterContainer">
+                    <label for="">Preview</label>
+                    <div id="npc-image">
+                        <img class="character" src="" alt="">
+                    </div>
+                    
+                    <div id="outfit-selector">
+                        <select id="genderSelector">
+                            <option value="female">Female</option>
+                            <option value="male">Male</option>
+                        </select>
+    
+                        <div class="addons">
+                            <div class="checkGroup">
+                                <input type="checkbox" name="addon1" value="1" onchange="updateAddons()"> Addon 1
+                            </div>
+                            <div class="checkGroup">
+                                <input type="checkbox" name="addon2" value="2" onchange="updateAddons()"> Addon 2
+                            </div>
+                            <div class="checkGroup">
+                                <input type="checkbox" name="mount" value="1" onchange="updateMount()"> Mount
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Incluindo o componente looktype -->
+                <div id="looktype-container"></div>
+            </div>
+        
+            <div class="basic-data-inputs">
+                <div class="input-group">
+                    <label for="npc-name">NPC Name</label>
+                    <input type="text" id="npc-name" name="name" placeholder="Name">
+                </div>
+        
+                <div class="input-group">
+                    <label for="npc-max-health">Max Health</label>
+                    <input type="text" id="npc-max-health" name="max-health" value="100">
+                </div>
+        
+                <div class="input-group">
+                    <label for="npc-health-now">Health Now</label>
+                    <input type="text" id="npc-health-now" name="health-now" value="100">
+                </div>
+        
+                <div class="input-group">
+                    <label for="npc-walk-interval">Walk Interval</label>
+                    <input type="text" id="npc-walk-interval" name="walk-interval" value="1500">
+                </div>
+        
+                <div class="input-group">
+                    <label for="npc-walk-radius">Walk Radius</label>
+                    <input type="text" id="npc-walk-radius" name="walk-radius" value="2">
+                </div>
+        
+                <div class="input-group">
+                    <label for="npc-speed">Speed</label>
+                    <input type="text" id="npc-speed" name="walk-speed" value="100">
+                </div>
+        
+                <div class="input-group">
+                    <label for="npc-floor-change">Floor Change</label>
+                    <select id="floorChangeSelector">
+                        <option value="false">No</option>
+                        <option value="true">Yes</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div id="buy-sell" class="content">
+            <div id="buy-sell-section">
+                <!-- Sub-navegação para Buy/Sell -->
+                <div class="sub-nav">
+                    <button class="sub-tab-btn active" onclick="switchBuySellTab('sell')">Sell</button>
+                    <button class="sub-tab-btn" onclick="switchBuySellTab('buy')">Buy</button>
+                </div>
+                
+                <!-- Aba Sell -->
+                <div id="sell-tab" class="sub-content active">
+                    <div id="sell-section">
+                        <div class="checkGroup">
+                            <input type="checkbox" id="canSellItems" onchange="toggleSellItems()"> This NPC can sell items
+                        </div>
+                        
+                        <div id="sell-items-container" style="display: none; margin-top: 20px;">
+                            <div id="add-item-section">
+                                <div style="display: flex; gap: 10px; align-items: end; margin-bottom: 20px;">
+                                    <div class="input-group" style="margin-bottom: 0; position: relative;">
+                                        <label for="sell-item-name-input">Item Name</label>
+                                        <input type="text" id="sell-item-name-input" placeholder="Search item by name or ID" autocomplete="off">
+                                        <div id="sell-item-suggestions" class="suggestions-dropdown"></div>
+                                    </div>
+                                    <div class="input-group" style="margin-bottom: 0;">
+                                        <label for="sell-gold-coins-input">Gold Coins</label>
+                                        <input type="number" id="sell-gold-coins-input" placeholder="100" min="1">
+                                    </div>
+                                    <button id="add-sell-item-btn" onclick="addSellItem()">Add Item</button>
+                                </div>
+                            </div>
+                            
+                            <div id="sell-items-table-container">
+                                <table id="sell-items-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Item Name</th>
+                                            <th>Item ID</th>
+                                            <th>Gold</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="sell-items-tbody">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Aba Buy -->
+                <div id="buy-tab" class="sub-content">
+                    <div id="buy-section">
+                        <div class="checkGroup">
+                            <input type="checkbox" id="canBuyItems" onchange="toggleBuyItems()"> This NPC can buy items
+                        </div>
+                        
+                        <div id="buy-items-container" style="display: none; margin-top: 20px;">
+                            <div id="add-buy-item-section">
+                                <div style="display: flex; gap: 10px; align-items: end; margin-bottom: 20px;">
+                                    <div class="input-group" style="margin-bottom: 0; position: relative;">
+                                        <label for="buy-item-name-input">Item Name</label>
+                                        <input type="text" id="buy-item-name-input" placeholder="Search item by name or ID" autocomplete="off">
+                                        <div id="buy-item-suggestions" class="suggestions-dropdown"></div>
+                                    </div>
+                                    <div class="input-group" style="margin-bottom: 0;">
+                                        <label for="buy-gold-coins-input">Gold Coins</label>
+                                        <input type="number" id="buy-gold-coins-input" placeholder="50" min="1">
+                                    </div>
+                                    <button id="add-buy-item-btn" onclick="addBuyItem()">Add Item</button>
+                                </div>
+                            </div>
+                            
+                            <div id="buy-items-table-container">
+                                <table id="buy-items-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Item Name</th>
+                                            <th>Item ID</th>
+                                            <th>Gold</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="buy-items-tbody">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="talking" class="content">
+            <div id="talking-section">
+                <div class="talking-inputs">
+                    <div class="input-group">
+                        <label for="greets-message">Greets Message</label>
+                        <input type="text" id="greets-message" name="greets-message" value="Hello |PLAYERNAME|, you need more info about {canary}?">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="bye-message">Bye Message</label>
+                        <input type="text" id="bye-message" name="bye-message" value="Yeah, good bye and don't come again!">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="walkaway-message">Walkaway Message</label>
+                        <input type="text" id="walkaway-message" name="walkaway-message" value="You not have education?">
+                    </div>
+                    
+                    <div class="input-group" id="sell-message-group" style="display: none;">
+                        <label for="sell-message">Sell Message</label>
+                        <input type="text" id="sell-message" name="sell-message" value="Sold %ix %s for %i gold.">
+                    </div>
+                </div>
+                
+                <div class="message-info" style="display: none;">
+                    <h3>Message Variables:</h3>
+                    <ul>
+                        <li><strong>|PLAYERNAME|</strong> - Player's name</li>
+                        <li><strong>{canary}</strong> - Server name placeholder</li>
+                        <li><strong>%ix</strong> - Item quantity (sell message)</li>
+                        <li><strong>%s</strong> - Item name (sell message)</li>
+                        <li><strong>%i</strong> - Gold amount (sell message)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div id="keywords" class="content">
+            <div id="keywords-section">
+                <div class="checkGroup">
+                    <input type="checkbox" id="usesKeywords" onchange="toggleKeywords()"> This NPC uses keywords
+                </div>
+                
+                <div id="keywords-container" style="display: none; margin-top: 20px;">
+                    <div id="add-keyword-section">
+                        <div style="display: flex; gap: 10px; align-items: end; margin-bottom: 20px;">
+                            <div class="input-group" style="margin-bottom: 0;">
+                                <label for="keyword-input">Keyword</label>
+                                <input type="text" id="keyword-input" placeholder="hi, help, trade...">
+                            </div>
+                            <div class="input-group" style="margin-bottom: 0; flex: 2;">
+                                <label for="response-input">Response</label>
+                                <input type="text" id="response-input" placeholder="Hello! How can I help you?">
+                            </div>
+                            <button id="add-keyword-btn" onclick="addKeyword()">Add</button>
+                        </div>
+                    </div>
+                    
+                    <div id="keywords-table-container">
+                        <table id="keywords-table">
+                            <thead>
+                                <tr>
+                                    <th>Keyword</th>
+                                    <th>Response</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="keywords-tbody">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para exibir código gerado -->
+    <div id="generate-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Script NPC Gerado</h2>
+                <span class="close" onclick="closeGenerateModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <textarea id="generated-code" readonly placeholder="O código do NPC será gerado aqui..."></textarea>
+            </div>
+            <div class="modal-footer">
+                <button class="download-btn" onclick="downloadNPCScript()">Download</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de confirmação para New -->
+    <div id="new-confirm-modal" class="confirm-modal">
+        <div class="confirm-modal-content">
+            <h3>Warning</h3>
+            <p>You will lose all registered data, do you want to continue?</p>
+            <div class="confirm-modal-buttons">
+                <button class="confirm-btn yes" onclick="confirmNewNPC()">Yes</button>
+                <button class="confirm-btn no" onclick="closeNewConfirmModal()">No</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Input de arquivo oculto -->
+    <input type="file" id="file-input" accept=".lua" />
+
+    <!-- Modal de erro para arquivo inválido -->
+    <div id="error-modal" class="error-modal">
+        <div class="error-modal-content">
+            <h3>Error</h3>
+            <p>Enter a valid NPC file</p>
+            <button class="error-btn" onclick="closeErrorModal()">OK</button>
+        </div>
+    </div>
+
+    <!-- Modal de Help -->
+    <div id="help-modal" class="help-modal">
+        <div class="help-modal-content">
+            <div class="help-modal-header">
+                <h2>About Canary NPC Maker</h2>
+                <span class="close" onclick="closeHelpModal()">&times;</span>
+            </div>
+            <div class="help-modal-body">
+                <p>A modern, web-based visual editor for creating NPCs for Canary OTServ.</p>
+                
+                <div class="info-grid">
+                    <div class="info-item">
+                        <strong>Version</strong>
+                        v1.0.0
+                    </div>
+                    <div class="info-item">
+                        <strong>Canary Version</strong>
+                        Compatible with latest
+                    </div>
+                    <div class="info-item">
+                        <strong>Developed by</strong>
+                        Eratsu feat. Claude
+                    </div>
+                    <div class="info-item">
+                        <strong>Built for</strong>
+                        Canary OTServ Community
+                    </div>
+                </div>
+
+                <h3>🎯 Features</h3>
+                <p>• Visual character editor with 249+ outfits</p>
+                <p>• Complete shop system (buy/sell items)</p>
+                <p>• Custom conversation messages</p>
+                <p>• Keywords system for interactions</p>
+                <p>• Real-time character preview</p>
+                <p>• Lua script generation and export</p>
+
+                <h3>🗄️ Database</h3>
+                <p>• <strong>items.xml</strong> loading all items</p>
+                <p>• <strong>outfits.xml</strong> (male/female) with addons</p>
+                <p>• <strong>mounts.xml</strong> with enable/disable toggle</p>
+
+                <h3>🔗 Links</h3>
+                <p>• <a href="https://github.com/opentibiabr/canary" target="_blank">Canary Repository</a></p>
+                <p>• <a href="https://discord.gg/opentibiabr" target="_blank">OpenTibia Brasil Community</a></p>
+                
+                <h3>💡 Tips</h3>
+                <p>• Use <strong>New</strong> to reset all data</p>
+                <p>• Use <strong>Open</strong> to load existing NPC files</p>
+                <p>• Use <strong>Generate</strong> to export Lua scripts</p>
+                <p>• Use <strong>Random</strong> for random character colors</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="scripts.js"></script>
+    <script src="looktype.js"></script>
+    <script src="sell-items.js"></script>
+    <script src="buy-items.js"></script>
+    <script src="keywords.js"></script>
+    <script src="talking.js"></script>
+    <script src="npc-generator.js"></script>
+    <script src="new-npc.js"></script>
+    <script src="open-npc.js"></script>
+    <script src="help-modal.js"></script>
+    <script>
+        // Carrega o componente looktype
+        fetch('looktype.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('looktype-container').innerHTML = html;
+            });
+            
+            const tabs = document.querySelectorAll('.tab-btn');
+
+            tabs.forEach(tab => tab.addEventListener('click', () => tabClicked(tab)));
+
+            const tabClicked = (tab) => {
+                tabs.forEach(tab => tab.classList.remove('active'));
+                tab.classList.add('active');
+
+                const contents = document.querySelectorAll('.content');
+                contents.forEach(content => content.classList.remove('show'));
+
+                const contentId = tab.getAttribute('content-id');
+                const content = document.getElementById(contentId);
+
+                if (content) {
+                    content.classList.add('show');
+                } else {
+                    console.error(`Elemento com ID '${contentId}' não encontrado`);
+                }
+            }
+
+            const currentActiveTab = document.querySelector('.tab-btn.active');
+            tabClicked(currentActiveTab);
+    </script>
+</body>
+</html>
