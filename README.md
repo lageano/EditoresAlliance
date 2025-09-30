@@ -3,17 +3,8 @@
 Bem-vindo ao OTCustom, um conjunto de editores e ferramentas criados para facilitar o desenvolvimento, manutenção e personalização do seu servidor OpenTibia.
 Este repositório reúne scripts, configurações e utilitários essenciais para criar um servidor totalmente customizado e estável.
 
-📁 Estrutura do Projeto
-OTCustom/
-├── data/                # Dados principais do servidor (NPCs, scripts, etc.)
-├── tools/               # Editores e utilitários
-│   ├── ItemEditor/      # Editor de itens (.otb, .xml)
-│   ├── SpellEditor/     # Editor de magias
-│   ├── MonsterEditor/   # Editor de monstros e bosses
-│   ├── MapEditor/       # Editor de mapas (.otbm)
-│   └── OutfitEditor/    # Editor de outfits
-├── config.lua           # Arquivo principal de configuração do servidor
-└── README.md            # Este arquivo
+<img width="809" height="370" alt="image" src="https://github.com/user-attachments/assets/ecedeb04-15c4-4dd7-9dcd-3d8d3d8a321d" />
+
 
 ⚙️ Requisitos
 
